@@ -1,3 +1,9 @@
+/**
+ * Basic cell class, holds a value and listeners.
+ * It will notifiy listeners when a value is changed.
+ * 
+ * @param mixed value the initial value of the cell
+ */
 function Cell(value) {
 	this.listeners = [];
 	this.completeListeners = [];
@@ -5,19 +11,40 @@ function Cell(value) {
 	this.init(value);
 };
 
+/**
+ * Initialisation function
+ * 
+ * @param mixed value the inital value of the cell
+ */
 Cell.prototype.init = function (value) {
 	this.setValue(value);
 };
 
+/**
+ * Sets the value of the cell
+ * 
+ * @param mixed value the value
+ */
 Cell.prototype.setValue = function (value) {
 	this.value = value;
 	this.changed();
 };
 
-Cell.prototype.getValue = function (value) {
+/**
+ * Returns the value of the cell.
+ * 
+ * @return mixed       the current value of the cell
+ */
+Cell.prototype.getValue = function () {
 	return this.value;
 };
 
+/**
+ * Adds a listener to the Cell. Mainly used to chain cells
+ * so they can notify each other when they change values.
+ * 
+ * @param listener listener the listener to add
+ */
 Cell.prototype.addListener = function (listener) {
 	for (var i = 0; i < this.listeners.length; i++) {
 		if (this.listeners[i] == listener) return;
@@ -25,6 +52,14 @@ Cell.prototype.addListener = function (listener) {
 	this.listeners.push(listener);
 };
 
+/**
+ * Adds a completed listener to the Cell. These listeners 
+ * are fired after the normal listeners and are usually
+ * used for formatting - i.e. you only want to format when
+ * all the other work is complete.
+ * 
+ * @param listener listener the listener to add
+ */
 Cell.prototype.addCompleteListener = function (listener) {
 	for (var i = 0; i < this.completeListeners.length; i++) {
 		if (this.completeListeners[i] == listener) return;
@@ -32,24 +67,49 @@ Cell.prototype.addCompleteListener = function (listener) {
 	this.completeListeners.push(listener);
 }
 
+/**
+ * Notify all al the listeners that this cells value has changed
+ */
 Cell.prototype.changed = function() {
 	this.notify();
 	//when we have notified them all, then call our complete function
 	this.notifyComplete();
 };
 
+/**
+ * Protected.
+ *
+ * Loop through the listeners and notify this cell has changed.
+ */
 Cell.prototype.notify = function () {
 	for (var i = 0; i < this.listeners.length; i++) {
 		this.listeners[i].targetChanged.call(this);
 	}
 };
 
+/**
+ * Protected.
+ *
+ * Loop through the completed listeners and notify this cell has changed.
+ */
 Cell.prototype.notifyComplete = function() {
 	for (var i = 0; i < this.completeListeners.length; i++) {
 		this.completeListeners[i].targetChanged.call(this);
 	}
 };
 
+/**
+ * A class that executes some formula on a collection of cells
+ * returns the result and sets the value of the target cell. It 
+ * also takes a calculation formula - this can be a string, or 
+ * an anonymous function.
+ * 
+ * @param array cells               an array of cells for the calculation
+ * @param cell targetCell          the result of the calculation is saved 
+ * into the target cell. 
+ * @param mixed calculationFunction either a string (referencing a function
+ * in Formula.prototype.calculations) or an anonymous function
+ */
 function Formula(cells, targetCell, calculationFunction) {
 	this.cells = [];
 	this.targetCell = null;
@@ -58,6 +118,17 @@ function Formula(cells, targetCell, calculationFunction) {
 	this.init(cells, targetCell, calculationFunction);
 };
 
+/**
+ * Protected.
+ *
+ * Initialisation function, called by the constructor.
+ * 
+ * @param array cells               an array of cells for the calculation
+ * @param cell targetCell          the result of the calculation is saved 
+ * into the target cell. 
+ * @param mixed calculationFunction either a string (referencing a function
+ * in Formula.prototype.calculations) or an anonymous function
+ */
 Formula.prototype.init = function (cells, targetCell, calculationFunction) {
 	this.cells = cells;
 	this.targetCell = targetCell;
@@ -84,11 +155,20 @@ Formula.prototype.init = function (cells, targetCell, calculationFunction) {
 	}
 };
 
+/**
+ * Performs the calculation, sets the value of the target cell
+ */
 Formula.prototype.calculate = function() {
 	var value = this.calculationFunction(this.cells);
 	this.targetCell.setValue(value);
 };
 
+/**
+ * A collection of available calculation methods. You can add
+ * to this list.
+ * 
+ * @type {Object}
+ */
 Formula.prototype.calculations = {
 	sum: function(cells) {
 		return Formula.prototype.calculations._simple(cells, '+');

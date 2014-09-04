@@ -1,0 +1,32 @@
+{
+  "name": "js-running-total",
+  "version": "0.0.0",
+  "description": "Keeps a running total in JavaScript",
+  "main": "js-running-total.min.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "karma": "~0.12.23",
+    "karma-chrome-launcher": "~0.1.4",
+    "karma-jasmine": "~0.1.5",
+    "karma-phantomjs-launcher": "latest",
+    "gulp": "~3.8",
+    "gulp-concat": "latest",
+    "gulp-uglify": "latest",
+    "gulp-karma": "0.0.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ArrowWebSolutions/js-running-total.git"
+  },
+  "author": "Arrow Web Solutions Ltd.",
+  "license": "GNU",
+  "bugs": {
+    "url": "https://github.com/ArrowWebSolutions/js-running-total/issues"
+  }
+}

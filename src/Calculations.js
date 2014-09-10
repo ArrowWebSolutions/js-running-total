@@ -40,6 +40,8 @@ var Calculations = {
           break;
       }
     }
+
+    return total;
   },
   sum: function(cells) {
     return this._simple(cells, '+');

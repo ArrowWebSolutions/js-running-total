@@ -46,22 +46,22 @@ var Calculations = {
   },
   subtract: function(cells) {
     return this._simple(cells, '-');
-  }
+  },
   multiply: function(cells) {
     return this._simple(cells, '*');
-  }
+  },
   divide: function(cells) {
     return this._simple(cells, '/');
-  }
+  },
   power: function(cells) {
     return this._simple(cells, '^');
-  }
+  },
   pow: function(cells) {
     return this.power(cells);
-  }
+  },
   max: function(cells) {
     return this._simple(cells, 'max');
-  }
+  },
   min: function(cells) {
     return this._simple(cells, 'min');
   }

@@ -58,6 +58,6 @@ Cell.prototype.addListener = function(listener) {
  */
 Cell.prototype.changed = function() {
   for (var i = 0; i < this.listeners.length; i++) {
-    this.listeners[i].targetChanged.call(this);
+    this.listeners[i].targetChanged(this);
   }
 };

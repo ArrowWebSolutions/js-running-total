@@ -31,21 +31,29 @@ Formula.prototype.init = function(targetCell, watchedCells, calculationFunction)
   this.targetCell = targetCell;
   this.watchedCells = watchedCells;
 
-  //if it's a string, get from our calculations
-  if (typeof calculationFunction === 'string') {
-    this.calculationFunction = Calculations[calculationFunction];
-  } else {
-    //assume function
-    this.calculationFunction = calculationFunction;
-  }
+  this.setCalculationFunction(calculationFunction);
 
   var self = this;
   for (var i = 0; i < this.watchedCells.length; i++) {
-    this.watchedCells.addListener(self);
+    this.watchedCells[i].addListener(self);
   }
 
   //finally, perform a calculation so the target
   this.calculate();
+};
+
+/**
+ * Sets the calculation function used on the cells
+ *
+ * @param string|function calculationFunction the calculation function to use.
+ */
+Formula.prototype.setCalculationFunction = function(calculationFunction) {
+  //if it's a string, get from our calculations
+  if (typeof calculationFunction === 'function') {
+    this.calculationFunction = calculationFunction;
+  } else {
+    this.calculationFunction = Calculations[calculationFunction];
+  }
 };
 
 /**

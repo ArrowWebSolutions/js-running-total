@@ -1,15 +1,13 @@
 describe("Calculations", function(){
 
-  var targetCell = new Cell();
-  var watchedCells = [];
+  var cells = [];
 
   beforeEach(function(){
-    targetCell = new Cell();
     cell1 = new Cell();
     cell2 = new Cell();
     cell3 = new Cell();
 
-    watchedCells = [cell1, cell2, cell3];
+    cells = [cell1, cell2, cell3];
 
     cell1.setValue(10);
     cell2.setValue(20);
@@ -22,5 +20,14 @@ describe("Calculations", function(){
 
   it('should be available', function(){
     expect(Calculations).toBeDefined();
+  });
+
+  it('should include our base calculations', function(){
+    expect(Calculations.sum).toBeDefined();
+    expect(Calculations.subtract).toBeDefined();
+  });
+
+  it('should be able to sum', function(){
+    expect(Calculations.sum(cells)).toEqual(60);
   });
 });

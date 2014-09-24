@@ -43,7 +43,7 @@ var Formatter = new function() {
 
   this.percentage = function(value, options) {
     if (typeof options === 'undefined') options = {};
-    if (typeof options.percentageMultiplyer) options.percentageMultiplyer = 100;
+    if (typeof options.percentageMultiplyer === 'undefined') options.percentageMultiplyer = 100;
     var number = parseFloat(value);
     if (isNaN(number)) return value;
     number = number * options.percentageMultiplyer;

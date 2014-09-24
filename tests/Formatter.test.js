@@ -38,4 +38,8 @@ describe("Format", function(){
     expect(Formatter.format(10000000, 'number')).toEqual('10,000,000');
   });
 
+  it('should format currency', function() {
+    expect(Formatter.format(1000, 'currency', {precision: 2})).toEqual('£1,000.00');
+  });
+
 });

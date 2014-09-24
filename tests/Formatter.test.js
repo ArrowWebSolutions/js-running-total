@@ -28,6 +28,7 @@ describe("Format", function(){
 
   it('should be available', function(){
     expect(Formatter).toBeDefined();
+    expect(Formatter.format).toBeDefined();
   });
 
   it('should format a number', function(){

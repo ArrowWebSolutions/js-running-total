@@ -2,9 +2,9 @@
  * Stores all the built in calculations we perform.
  */
 
-var Calculations = {
+var Calculations = new function() {
   /* Base calculation that performs some maths on the cells */
-  _simple: function(cells, operand) {
+  this._simple = function(cells, operand) {
     //clone cells so we don't shift them
     var nCells = cells.slice(0);
     //our cells will either store a numeric value, or string.
@@ -42,29 +42,29 @@ var Calculations = {
     }
 
     return total;
-  },
-  sum: function(cells) {
+  };
+  this.sum = function(cells) {
     return this._simple(cells, '+');
-  },
-  subtract: function(cells) {
+  };
+  this.subtract= function(cells) {
     return this._simple(cells, '-');
-  },
-  multiply: function(cells) {
+  };
+  this.multiply= function(cells) {
     return this._simple(cells, '*');
-  },
-  divide: function(cells) {
+  };
+  this.divide = function(cells) {
     return this._simple(cells, '/');
-  },
-  power: function(cells) {
+  };
+  this.power = function(cells) {
     return this._simple(cells, '^');
-  },
-  pow: function(cells) {
+  };
+  this.pow = function(cells) {
     return this.power(cells);
-  },
-  max: function(cells) {
+  };
+  this.max = function(cells) {
     return this._simple(cells, 'max');
-  },
-  min: function(cells) {
+  };
+  this.min = function(cells) {
     return this._simple(cells, 'min');
-  }
+  };
 };

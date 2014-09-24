@@ -33,7 +33,7 @@ describe("Format", function(){
 
   it('should format a number', function(){
     expect(Formatter.format(1000, 'number')).toEqual('1,000');
-    expect(Formatter.format(1000, 'number', {precision: 2}).toEqual('1,000.00'));
+    expect(Formatter.format(1000, 'number', {precision: 2})).toEqual('1,000.00');
     expect(Formatter.format(1000, 'number', {thousandsSeparator: '.', decimalPoint: ',', precision: 3})).toEqual('1.000,000');
   });
 

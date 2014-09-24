@@ -32,8 +32,9 @@ describe("Formula", function(){
 
   it('should be available', function(){
     expect(formula.init).toBeDefined();
-    var fn = Calculations.sum;
-    formula.init(targetCell, cells, Calculations.sum);
+    expect(Calculations.sum).toBeDefined();
+    var fn = function(cells) { Calculations.sum(cells); };
+    formula.init(targetCell, cells, fn);
     expect(formula.init).toHaveBeenCalled();
   });
 

@@ -52,6 +52,7 @@ describe("Format", function(){
 
   it('should format percentage', function() {
     expect(Formatter.format('0.1', 'percentage')).toEqual('10%');
+    expect(Formatter.format('1.2', 'percentage')).toEqual('120%');
   });
 
 });

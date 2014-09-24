@@ -24,6 +24,7 @@ describe("Formula", function(){
 
 
     spyOn(formula, 'init').andCallThrough();
+    spyOn(targetCell, 'setValue').andCallThrough();
   });
 
   afterEach(function(){
@@ -36,6 +37,11 @@ describe("Formula", function(){
     var fn = function(cells) { Calculations.sum(cells); };
     formula.init(targetCell, cells, fn);
     expect(formula.init).toHaveBeenCalled();
+  });
+
+  it('should calculate when a cell changes', function(){
+    cell1.setValue(50);
+    expect(targetCell.setValue).toHaveBeenCalled();
   });
 
 });

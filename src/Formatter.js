@@ -3,7 +3,8 @@ var Formatter = new function() {
     thousandsSeparator: ',',
     decimalPoint: '.',
     precision: 0,
-    currencySymbol: '£'
+    currencySymbol: '£',
+    percentageSymbol: '%'
   };
 
   /**
@@ -41,7 +42,15 @@ var Formatter = new function() {
   }
 
   this.percentage = function(value, options) {
-    return '10%';
+    if (typeof options === 'undefined') options = {};
+    if (typeof options.percentageMultiplyer) options.percentageMultiplyer = 100;
+    var number = parseFloat(value);
+    if (isNaN(number)) return value;
+    number = number * options.percentageMultiplyer;
+    var val = this.number(number, options);
+    options = this._extend(this.defaultOptions, options);
+
+    return val + options.percentageSymbol;
   };
 
   this._toFixed = function(value, precision, decimalPoint) {

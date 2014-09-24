@@ -40,6 +40,10 @@ var Formatter = new function() {
     return options.currencySymbol + val;
   }
 
+  this.percentage = function(value, options) {
+    return '10%';
+  };
+
   this._toFixed = function(value, precision, decimalPoint) {
     if (typeof decimalPoint === 'undefined') decimalPoint = this.defaultOptions.decimalPoint;
     return value.toFixed(precision).replace('.', decimalPoint);

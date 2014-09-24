@@ -52,9 +52,14 @@ var Formatter = new function() {
 
   this._extend = function(obj1, obj2) {
     if (obj1 && obj2) {
-      for (var attrname in obj2) {
-        obj1[attrname] = obj2[attrname];
+      var o1 = {};
+      for (var attrname in obj1) {
+        o1[attrname] = obj1[attrname];
       }
+      for (var attrname in obj2) {
+        o1[attrname] = obj2[attrname];
+      }
+      return o1;
     }
     return obj1;
   };

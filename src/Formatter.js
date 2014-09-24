@@ -26,16 +26,23 @@ var Formatter = new function() {
     var number = parseFloat(value);
     if (isNaN(number)) return value;
 
-    return this._addSeparators(number.toFixed(options.precision), options.thousandsSeparator);
+    var fixed = this._toFixed(value, options.precision, options.decimalPoint);
+    return this._addSeparators(fixed, options.thousandsSeparator, options.decimalPoint);
   };
 
-  this._addSeparators = function(value, separator) {
+  this._toFixed = function(value, precision, decimalPoint) {
+    if (typeof decimalPoint === 'undefined') decimalPoint = this.defaultOptions.decimalPoint;
+    return value.toFixed(precision).replace('.', decimalPoint);
+  }
+
+  this._addSeparators = function(value, separator, decimalPoint) {
     if (typeof separator === 'undefined') separator = this.defaultOptions.thousandsSeparator;
+    if (typeof decimalPoint === 'undefined') decimalPoint = this.defaultOptions.decimalPoint;
 
     value += '';
-    var parts = value.split('.');
+    var parts = value.split(decimalPoint);
     var integer = parts[0];
-    var decimal = parts.length > 1 ? '.' + parts[1] : '';
+    var decimal = parts.length > 1 ? decimalPoint + parts[1] : '';
     var regEx = /(\d+)(\d{3})/;
     while (regEx.test(integer)) {
       integer = integer.replace(regEx, '$1' + separator + '$2');

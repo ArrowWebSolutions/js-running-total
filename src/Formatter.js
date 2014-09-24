@@ -30,6 +30,16 @@ var Formatter = new function() {
     return this._addSeparators(fixed, options.thousandsSeparator, options.decimalPoint);
   };
 
+  this.currency = function(value, options) {
+    if (typeof options === 'undefined') options = {};
+    if (typeof options.precision === 'undefined') options.precision = 2;
+
+    var val = this.number(value, options);
+    options = this._extend(this.defaultOptions, options);
+
+    return options.currencySymbol + val;
+  }
+
   this._toFixed = function(value, precision, decimalPoint) {
     if (typeof decimalPoint === 'undefined') decimalPoint = this.defaultOptions.decimalPoint;
     return value.toFixed(precision).replace('.', decimalPoint);

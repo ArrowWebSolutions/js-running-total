@@ -39,6 +39,11 @@ describe("Formula", function(){
     expect(formula.init).toHaveBeenCalled();
   });
 
+  it('should be able to use a string as function', function(){
+    formula = new Formula(targetCell, cells, 'sum');
+    expect(targetCell.getValue()).toEqual(150);
+  });
+
   it('should calculate when a cell changes', function(){
     cell1.setValue(50);
     expect(targetCell.setValue).toHaveBeenCalled();

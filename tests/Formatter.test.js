@@ -39,6 +39,8 @@ describe("Format", function(){
 
     //alternative format
     expect(Formatter.number(10000)).toEqual('10,000');
+    //rounding
+    expect(Formatter.number(99.99)).toEqual('100');
   });
 
   it('should format currency', function() {
@@ -48,6 +50,9 @@ describe("Format", function(){
 
     //alternative format
     expect(Formatter.currency(54321)).toEqual('£54,321.00');
+    //rounding
+    expect(Formatter.currency(99.99)).toEqual('£99.99');
+    expect(Formatter.currency(99.999)).toEqual('£100.00');
   });
 
   it('should format percentage', function() {
@@ -55,6 +60,10 @@ describe("Format", function(){
     expect(Formatter.format('1.2', 'percentage')).toEqual('120%');
     expect(Formatter.format(1.234, 'percentage', {precision: 2})).toEqual('123.40%');
     expect(Formatter.format(10, 'percentage', {percentageMultiplyer: 1})).toEqual('10%');
+
+    //rounding
+    expect(Formatter.percentage(0.9999)).toEqual('100%');
+    expect(Formatter.percentage(0.9999, {precision: 2})).toEqual('99.99%');
   });
 
 });

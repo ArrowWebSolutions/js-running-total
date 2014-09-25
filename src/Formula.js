@@ -50,9 +50,13 @@ Formula.prototype.init = function(targetCell, watchedCells, calculationFunction)
 Formula.prototype.setCalculationFunction = function(calculationFunction) {
   //if it's a string, get from our calculations
   if (typeof calculationFunction === 'function') {
-    this.calculationFunction = calculationFunction;
+    this.calculationFunction = function(cells) {
+      return calculationFunction(cells);
+    }
   } else {
-    this.calculationFunction = Calculations[calculationFunction];
+    this.calculationFunction = function(cells) {
+      return Calculations[calculationFunction](cells);
+    }
   }
 };
 

@@ -41,4 +41,25 @@ describe("Cell", function(){
     expect(cell.listeners.length).toEqual(listeners + 1);
   });
 
+  it('should be able to use a formatter', function(){
+    cell.init(1000);
+    cell.setFormatter('number');
+    expect(cell.getFormattedValue()).toEqual('1,000');
+    cell.setFormatter('currency');
+    expect(cell.getFormattedValue()).toEqual('£1,000.00');
+    //custom formatters
+    cell.setFormatter(function(value) {
+      return 'Test' + value;
+    });
+    expect(cell.getFormattedValue()).toEqual('Test1000');
+    //customer formattters with options
+    cell.setFormatter(function(value, options){
+      return options.prefix + value + options.suffix;
+    }, {
+      prefix: 'Test',
+      suffix: 'Boo'
+    });
+    expect(cell.getFormattedValue()).toEqual('Test1000Boo');
+  });
+
 });

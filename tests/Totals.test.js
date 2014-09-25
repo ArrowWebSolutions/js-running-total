@@ -199,8 +199,16 @@ describe("Total, resource checking", function(){
     expect(d1.setValue.calls.length).toEqual(2);
     expect(d2.setValue.calls.length).toEqual(1);
     expect(c4.setValue.calls.length).toEqual(2);
-    //Erm, because we spy on setValue, it's not actually called
-    //so it doesn't trigger correctly
-    //expect(d4.setValue.calls.length).toEqual(2);
+    expect(d4.setValue.calls.length).toEqual(2);
+    expect(d4a.setValue.calls.length).toEqual(2);
+
+    a3.setValue(200);
+
+    expect(a4.setValue.calls.length).toEqual(2);
+    expect(d3.setValue.calls.length).toEqual(2);
+    expect(d4.setValue.calls.length).toEqual(3);
+    expect(d4a.setValue.calls.length).toEqual(3);
+    expect(b4.setValue.calls.length).toEqual(1);
+    expect(d2.setValue.calls.length).toEqual(1);
   });
 });

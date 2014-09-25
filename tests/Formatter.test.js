@@ -45,7 +45,7 @@ describe("Format", function(){
 
   it('should format currency', function() {
     expect(Formatter.format(1000, 'currency')).toEqual('£1,000.00');
-    expect(Formatter.format(1000, 'currency', {precision: 0})).toEqual('£1,000');
+    expect(Formatter.format('1000', 'currency', {precision: 0})).toEqual('£1,000');
     expect(Formatter.format(1000000, 'currency', {currencySymbol: '$'})).toEqual('$1,000,000.00');
 
     //alternative format

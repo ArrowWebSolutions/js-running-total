@@ -27,7 +27,7 @@ var Formatter = new function() {
     var number = parseFloat(value);
     if (isNaN(number)) return value;
 
-    var fixed = this._toFixed(value, options.precision, options.decimalPoint);
+    var fixed = this._toFixed(number, options.precision, options.decimalPoint);
     return this._addSeparators(fixed, options.thousandsSeparator, options.decimalPoint);
   };
 

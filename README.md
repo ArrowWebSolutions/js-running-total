@@ -1,11 +1,12 @@
 Running Total
 ================
 
-Keeps a running total in JavaScript. Includes various calculations, formatters and filters.
+A small library to keep a running total in JavaScript. Includes various calculations and formatters.
 
-* Please note this project is in it's infancy, and the documentation is not up to scratch at the minute. Please feel free to play around however. :)*
+## Basic Usage
+First create your cells, you then create a formula that will use a calculation function and save the result in a target cell.
 
-## Usage
+The forumula automatically listens for changes to any of the cells and updates the target cell with the new result of the calculation.
 
 	var A1 = new Cell(100);
 	var A2 = new Cell(200);
@@ -14,7 +15,7 @@ Keeps a running total in JavaScript. Includes various calculations, formatters a
 	//this is our total
 	var A4 = new Cell();
 
-	var sum = new Formula([A1, A2, A3], A4, 'sum');
+	var sum = new Formula(A4, [A1, A2, A3], 'sum');
 
 	//outputs Total is: 600
 	console.log('Total is: ' + A4.getValue());
@@ -27,38 +28,130 @@ Keeps a running total in JavaScript. Includes various calculations, formatters a
 
 This is a basic total, more complex useage is detailed below. But the most common use is to keep an eye on the DOM so we can update various elements when the user (or even programatically) updates elements.
 
-The core.js file, is deliberately framework agnostic. You then use the supplied (only jQuery available at present!) files to plug it into your chosen framework.
+This project is deliberately framework agnostic. You can then use additional plugins to plug it into your chosen framework:
 
-## jQuery
+jQuery - link here to the jQuery integration
 
-For this example, we have four input elements #A1, #A2, #A3 and #A4
+## Installation
 
-	$('#A4').runningTotal({
-		cells: [
-			$('#A1'),
-			$('#A2'),
-			$('#A3')
-		],
-		calculation: 'sum',
-		format: 'currency',
-		filter: 'number'
-	});
+Bower explaination
 
-This will now watch the input elements for changes and update #A4.
+Normal installation
 
-You can also chain these together, so you can use #A4 in a calculation:
+## Usage Examples
 
-	$('#A6').runningTotal({
-		cells: [
-			$('#A4'),
-			$('#A5')
-		],
-		calculation: 'sum',
-		format: 'currency',
-		filter: 'number'
-	});
+#### Formula
+When we create a new forumula, we pass the target cell (where to save the result), the cells to use in the calculation and a calculation method.
 
-Even when #A4 is updated programatically by our first function, A6 will get updated.
+The following calculations are built in;
 
-### filter
-We introduced a new concept on the jQuery methods, filter; this is used to transform values read from the DOM. For example, our #A1 input box may have £100.00 as it's value - we can't use this in our calculation as such. So the 'number' filter transforms this to 100.00.
+* sum - adds up all the cells
+* subtract - subtracts the cells (i.e. in our example A1 - A2 - A3)
+* multiply - multiplies the cells (A1 * A2 * A3)
+* divide - divides the cells (A1 / A2 / A3)
+* power - powers the value (A1 to the power of A2 to the power of A3)
+* max - returns the max value of the cells (A3)
+* min - retuns the min value of the cells (A1)
+
+You can add your own formula using the API.
+
+#### Formatters
+You can format the cells so you are always returned a formatted value. For example, continuing on from our example:
+
+	A1.setValue(1000);
+	A4.setFormatter('number');
+	
+	/outputs Total is: 1,500
+	console.log('Total is: ' + A4.getFormattedValue());
+	
+The standard formatters are;
+
+* number - formats a number to a specified precision with a thousands separator and decimal point
+* currency - formats a number to currency
+* percentage - formats a number to a percentage
+
+You can pass the formatters options to change how / what they output. This is explained in the API documentation.
+
+# API
+## Cell
+##### construct([value])
+Creates a new cell, setting the inital value
+	
+	//creates a new cell object, no inital value
+	var A1 = new Cell();
+	
+	//creates a new cell object, with an inital value of 100
+	var A1 = new Cell(100);
+##### setValue(value)
+Sets the value of the cell.
+
+	//sets the value to 2000
+	A1.setValue(2000);
+##### getValue()
+Gets the value of the cell (unformatted)
+
+	//retrives the value (2000)
+	A1.getValue();
+##### addListener(listener)
+Adds a listener to the cell. Whenever the cells value changes this listener is notified.
+
+The listener must implement a targetChanged method. This method is passed the cell instance when the cell changes.
+
+	var listener = function(cell) {
+		alert("New cell value is " . cell.getValue());
+	}
+	
+	A1.addListener(listener);
+##### setFormatter(formatter[, options])
+Sets the formatter of the cell, the formatter can either be a string or a function.
+
+If passing a function, ensure the function accepts two arguments; value and options. The value is the unformatted value of the cell. The options are the options you passed into this method.
+
+If passing a string it will try and use a formatter by that name from the standard Formatter object.
+
+The options are passed to the formatter and can be used to change how the formatter works.
+
+	A1.setFormatter('currency', {currencySymbol: '$'});
+##### getFormattedValue()
+Returns the formatted value of the cell. Or if no formatter has been set, it returns the cells value.
+
+	//returns 2000
+	A1.getValue();
+	
+	//returns $2,000.00
+	A1.getFormattedValue()
+## Formula
+##### construct(targetCell, watchedCells, calculationFunction)
+Creates a new formula object. It will update the targetCell value by running the watchedCells through the calculationFunction.
+
+The targetCell is updated on formula initialisation.
+
+	var f1 = new Formula(targetCell, [A1, A2, A3], 'sum');
+	
+The targetCell must be a Cell instance
+The watchedCells must be an array of Cell instances
+The calculation function can either be a string or function.
+
+When using a custom function, ensure the function takes an array of cells (these are the watched cells you pass in).
+
+	var sumAndDivideBy10 = function(cells) {
+		var total = 0;
+		for (var i = 0; i < cells.length; i++) {
+			total += cells[i].getValue();
+		}
+		return total / 10;
+	}
+	
+	var f1 = new Formula(targetCell, [A1, A2, A3], sumAndDivideBy10);
+	
+#### setCalculationFunction(calculationFunction)
+Sets the calculation function being used. See the construct method for more information on the calculation function.
+
+# Advanced Usage
+
+The options for Formatters
+Adding custom calculations
+Adding custom formatters
+Changing formatters default values
+
+

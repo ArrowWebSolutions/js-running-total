@@ -8,6 +8,7 @@ function Cell(value)
   this.listeners = [];
   this.value = null;
   this.init(value);
+  this.formatter = null;
 }
 
 /**
@@ -60,4 +61,34 @@ Cell.prototype.changed = function() {
   for (var i = 0; i < this.listeners.length; i++) {
     this.listeners[i].targetChanged(this);
   }
+};
+
+/**
+ * Add a formatter to the cell
+ * @param {string|function} formatter
+ * @param {object} options   the options to pass to the formatter function
+ */
+Cell.prototype.setFormatter = function(formatter, options) {
+  if (typeof formatter === 'function') {
+    this.formatter = function(value) {
+      return formatter(value, options);
+    }
+  } else {
+    this.formatter = function(value) {
+      return Formatter.format(value, formatter, options);
+    };
+  }
+};
+
+
+/**
+ * Gets the formatted value for the cell
+ * @return {var} the formatted value
+ */
+Cell.prototype.getFormattedValue = function() {
+  if (this.formatter)
+  {
+    return this.formatter(this.getValue());
+  }
+  return this.getValue();
 };

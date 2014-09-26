@@ -26,7 +26,7 @@ var Formatter = new function() {
   this.number = function(value, options) {
     options = this._extend(this.defaultOptions, options);
     var number = parseFloat(value);
-    if (isNaN(number)) return options.invalidValue;
+    if (isNaN(number)) number = options.invalidValue;
 
     var fixed = this._toFixed(number, options.precision, options.decimalPoint);
     return this._addSeparators(fixed, options.thousandsSeparator, options.decimalPoint);

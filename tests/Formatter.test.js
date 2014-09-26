@@ -66,4 +66,8 @@ describe("Format", function(){
     expect(Formatter.percentage(0.9999, {precision: 2})).toEqual('99.99%');
   });
 
+  it('should display an nice result when the actual result is invalid', function() {
+    expect(Formatter.format(NaN, 'number')).toEqual('0');
+  });
+
 });

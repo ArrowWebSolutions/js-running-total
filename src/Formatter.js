@@ -46,7 +46,6 @@ var Formatter = new function() {
     if (typeof options === 'undefined') options = {};
     if (typeof options.percentageMultiplyer === 'undefined') options.percentageMultiplyer = 100;
     var number = parseFloat(value);
-    if (isNaN(number)) return value;
     number = number * options.percentageMultiplyer;
     var val = this.number(number, options);
     options = this._extend(this.defaultOptions, options);

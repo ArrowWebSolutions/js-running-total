@@ -4,7 +4,8 @@ var Formatter = new function() {
     decimalPoint: '.',
     precision: 0,
     currencySymbol: '£',
-    percentageSymbol: '%'
+    percentageSymbol: '%',
+    invalidValue: 0
   };
 
   /**

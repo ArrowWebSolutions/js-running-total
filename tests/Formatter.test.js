@@ -70,6 +70,8 @@ describe("Format", function(){
     expect(Formatter.format(NaN, 'number')).toEqual('0');
     expect(Formatter.format(NaN, 'percentage')).toEqual('0%');
     expect(Formatter.format(NaN, 'currency')).toEqual('£0.00');
+    expect(Formatter.format(NaN, 'number', {precision: 3})).toEqual('0.000');
+    expect(Formatter.format(10 / 0, 'number')).toEqual('0');
   });
 
 });

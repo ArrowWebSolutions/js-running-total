@@ -68,6 +68,7 @@ describe("Format", function(){
 
   it('should display an nice result when the actual result is invalid', function() {
     expect(Formatter.format(NaN, 'number')).toEqual(0);
+    expect(Formatter.format(NaN, 'percentage')).toEqual('0%');
   });
 
 });

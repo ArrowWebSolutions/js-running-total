@@ -33,10 +33,10 @@ This project is deliberately framework agnostic. You can then use additional plu
 jQuery - link here to the jQuery integration
 
 ## Installation
-
-Bower explaination
-
-Normal installation
+#### Bower
+	bower install js-running-total --save
+#### Local Install
+Clone the repository, if you want the development version of js-running-total all the source files are in the `src` folder. Otherwise, the easiest install is to just include js-running-total.min.js in your project.
 
 ## Usage Examples
 
@@ -53,7 +53,26 @@ The following calculations are built in;
 * max - returns the max value of the cells (A3)
 * min - retuns the min value of the cells (A1)
 
-You can add your own formula using the API.
+You can add your own formula using the API - or you can pass in a function to do your calculation.
+
+	var A5 = new Cell();
+	var subtract = new Forumula(A5, [A3, A2, A1], 'subtract');
+	
+	//outputs Total is: 0
+	console.log('Total is: ' + A5.getValue());
+	
+	//example of custom function
+	var A6 = new Cell();
+	var sumThenDivideBy10 = new Formula(A6, [A3, A2, A1]), function(cells){
+		var total = 0;
+		for (var i = 0; i < cells.length; i++) {
+			total += cells[i].getValue();
+		}
+		return total / 10;
+	});
+	
+	//outputs Total is: 30
+	console.log('Total is: ' + A6.getValue());
 
 #### Formatters
 You can format the cells so you are always returned a formatted value. For example, continuing on from our example:
@@ -61,7 +80,7 @@ You can format the cells so you are always returned a formatted value. For examp
 	A1.setValue(1000);
 	A4.setFormatter('number');
 	
-	/outputs Total is: 1,500
+	//outputs Total is: 1,500
 	console.log('Total is: ' + A4.getFormattedValue());
 	
 The standard formatters are;
@@ -112,6 +131,8 @@ If passing a string it will try and use a formatter by that name from the standa
 The options are passed to the formatter and can be used to change how the formatter works.
 
 	A1.setFormatter('currency', {currencySymbol: '$'});
+
+See the Advanced Usage for a full explaination of these options.
 ##### getFormattedValue()
 Returns the formatted value of the cell. Or if no formatter has been set, it returns the cells value.
 

@@ -5,6 +5,7 @@
 var Calculations = new function() {
   /* Base calculation that performs some maths on the cells */
   this._simple = function(cells, operand) {
+    if (cells.length <= 0) return 0;
     //clone cells so we don't shift them
     var nCells = cells.slice(0);
     //our cells will either store a numeric value, or string.

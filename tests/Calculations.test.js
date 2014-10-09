@@ -68,4 +68,8 @@ describe("Calculations", function(){
   it('should be able to get the min', function(){
     expect(Calculations.min(cells)).toEqual(10);
   });
+
+  it('should deal with an empty array', function(){
+    expect(Calculations.sum([])).toEqual(0);
+  });
 });

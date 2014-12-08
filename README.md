@@ -1,6 +1,8 @@
 Running Total
 ================
 
+* Please note - our documenation isn't up to scratch yet. However, the project should be ready to roll. Please report any issues you encounter, PR greatly appriciated. *
+
 A small library to keep a running total in JavaScript. Includes various calculations and formatters.
 
 ## Basic Usage
@@ -30,10 +32,10 @@ This is a basic total, more complex useage is detailed below. But the most commo
 
 This project is deliberately framework agnostic. You can then use additional plugins to plug it into your chosen framework:
 
-jQuery - link here to the jQuery integration
+jQuery - coming soon
 
 ## Installation
-#### Bower
+#### Bower (coming soon)
 	bower install js-running-total --save
 #### Local Install
 Clone the repository, if you want the development version of js-running-total all the source files are in the `src` folder. Otherwise, the easiest install is to just include js-running-total.min.js in your project.
